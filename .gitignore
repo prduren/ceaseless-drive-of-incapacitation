@@ -1,0 +1,35 @@
+﻿# Unity Generated Folders
+Library/
+Temp/
+Obj/
+Logs/
+UserSettings/
+MemoryCaptures/
+
+# Visual Studio / Rider
+.vs/
+.idea/
+*.csproj
+*.sln
+*.suo
+*.user
+*.userprefs
+
+# Builds
+Builds/
+*.apk
+*.aab
+*.exe
+*.app
+*.ipa
+
+# Custom
+
+Assets/Pixel Stylizer Camera
+
+# OS-Specific Files
+.DS_Store
+Thumbs.db
+
+# Ignore Plastic SCM metadata
+PlasticSCM/
