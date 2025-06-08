@@ -22,6 +22,7 @@ public class WorldMove : MonoBehaviour
     [SerializeField] AudioDistortionFilter EngineIdleDistortion;
     float initialEngineIdleDistortionLevel;
     float heldEngineIdleDistortionLevel;
+    [SerializeField] AudioSource BeepAudio;
 
     void Start()
     {
@@ -108,6 +109,7 @@ public class WorldMove : MonoBehaviour
 
         // all the enemy faces
         StopPoints[stopPointIndex].transform.GetChild(5).transform.gameObject.SetActive(true);
+        BeepAudio.Play();
 
         yield return new WaitForSeconds(10f);
 
@@ -116,6 +118,7 @@ public class WorldMove : MonoBehaviour
         // red light disable
         StopPoints[stopPointIndex].transform.GetChild(3).transform.GetChild(0).GetComponent<Light>().intensity = 0;
 
+        BeepAudio.Stop();
         playerShouldCurrentlyBeStopped = false;
         stopPointIndex++;
         worldSpeed = worldSpeed + 10f;
