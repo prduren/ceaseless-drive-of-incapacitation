@@ -16,11 +16,21 @@ public class WorldMove : MonoBehaviour
     [SerializeField] GameObject DeathScreen;
     bool EXEC_GreenLightFlag = true;
     float worldSpeed;
+    [SerializeField] AudioSource EngineIdle;
+    float initialEngineIdlePitch;
+    float heldEngineIdlePitch;
+    [SerializeField] AudioDistortionFilter EngineIdleDistortion;
+    float initialEngineIdleDistortionLevel;
+    float heldEngineIdleDistortionLevel;
 
     void Start()
     {
         initialEntireWorldPos = EntireWorld.transform.position;
         worldSpeed = 20f;
+        initialEngineIdlePitch = EngineIdle.pitch;
+        initialEngineIdleDistortionLevel = EngineIdleDistortion.distortionLevel;
+        heldEngineIdlePitch = EngineIdle.pitch;
+        heldEngineIdleDistortionLevel = EngineIdleDistortion.distortionLevel;
     }
 
     // Update is called once per frame
@@ -28,6 +38,8 @@ public class WorldMove : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
+            EngineIdle.pitch = heldEngineIdlePitch;
+            EngineIdleDistortion.distortionLevel = heldEngineIdleDistortionLevel;
             EntireWorld.transform.position = Vector3.MoveTowards(EntireWorld.transform.position, new Vector3(0f, 0f, -10000f), worldSpeed * Time.deltaTime);
             if (playerShouldCurrentlyBeStopped)
             {
@@ -36,7 +48,8 @@ public class WorldMove : MonoBehaviour
         }
         else
         {
-            Debug.Log(distanceFromNextStopPoint);
+            EngineIdle.pitch = initialEngineIdlePitch;
+            EngineIdleDistortion.distortionLevel = initialEngineIdleDistortionLevel;
         }
 
         distanceFromNextStopPoint = Vector3.Distance(Player.transform.position, StopPoints[stopPointIndex].transform.position);
@@ -100,6 +113,8 @@ public class WorldMove : MonoBehaviour
 
         stopPointIndex++;
         worldSpeed = worldSpeed + 10f;
+        heldEngineIdlePitch += 0.2f;
+        heldEngineIdleDistortionLevel += 0.1f;
 
         Cursor.visible = false;
     }
