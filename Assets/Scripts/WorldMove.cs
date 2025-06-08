@@ -11,7 +11,7 @@ public class WorldMove : MonoBehaviour
     float distanceFromNextStopPoint;
     [SerializeField] GameObject Player;
     bool EXEC_redLightSwitch = false;
-    bool playerShouldCurrentlyBeStopped = false;
+    public bool playerShouldCurrentlyBeStopped = false;
     [SerializeField] GameObject DeathScreen;
 
     void Start()
@@ -27,7 +27,6 @@ public class WorldMove : MonoBehaviour
             EntireWorld.transform.position = Vector3.MoveTowards(EntireWorld.transform.position, new Vector3(0f, 0f, -1000f), 20f * Time.deltaTime);
             if (playerShouldCurrentlyBeStopped)
             {
-                Debug.Log("you have been t-boned hehe");
                 DeathScreen.SetActive(true);
             }
         }
@@ -48,14 +47,25 @@ public class WorldMove : MonoBehaviour
         {
             Debug.Log("YEAH!!!!!!!!");
 
-            // red light
+            // red light enable
             StopPoints[stopPointIndex].transform.GetChild(3).transform.GetChild(0).GetComponent<Light>().intensity = 3;
 
-            // yellow light
+            // yellow light disable
             StopPoints[stopPointIndex].transform.GetChild(2).transform.GetChild(0).GetComponent<Light>().intensity = 0;
 
-            EXEC_redLightSwitch = false;
             playerShouldCurrentlyBeStopped = true;
+            StartCoroutine(TimerForGreenLight());
+            EXEC_redLightSwitch = false;
         }
+    }
+
+    private IEnumerator TimerForGreenLight()
+    {
+        yield return new WaitForSeconds(10f);
+        Debug.Log("enable green light");
+        // green light enable
+        StopPoints[stopPointIndex].transform.GetChild(1).transform.GetChild(0).GetComponent<Light>().intensity = 3;
+        // red light disable
+        StopPoints[stopPointIndex].transform.GetChild(3).transform.GetChild(0).GetComponent<Light>().intensity = 0;
     }
 }
