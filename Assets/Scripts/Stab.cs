@@ -6,6 +6,8 @@ public class Stab : MonoBehaviour
 {
     Vector3 knifeInitPos;
     [SerializeField] WorldMove WorldMove;
+    bool knifeInForwardPosition = false;
+
 
     void Start()
     {
@@ -20,11 +22,28 @@ public class Stab : MonoBehaviour
         {
             // move knife to init pos
             gameObject.transform.position = knifeInitPos;
+            knifeInForwardPosition = false;
         }
         else if (Input.GetKeyDown("w"))
         {
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit))
+            {
+                if (hit.transform.gameObject.tag == "enemy" && !knifeInForwardPosition)
+                {
+                    Debug.Log("enemy hit");
+                }
+            }
+
+            knifeInForwardPosition = true;
+
             // move knife to stabbed pos
             gameObject.transform.position = new Vector3(knifeInitPos.x, knifeInitPos.y, knifeInitPos.z + 0.2f);
+
+
         }
+
+
     }
 }
