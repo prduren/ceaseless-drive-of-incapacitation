@@ -23,6 +23,8 @@ public class WorldMove : MonoBehaviour
     float initialEngineIdleDistortionLevel;
     float heldEngineIdleDistortionLevel;
     [SerializeField] AudioSource BeepAudio;
+    [SerializeField] AudioSource DeathSound;
+    [SerializeField] Stab Stab;
 
     void Start()
     {
@@ -45,6 +47,12 @@ public class WorldMove : MonoBehaviour
             if (playerShouldCurrentlyBeStopped)
             {
                 DeathScreen.SetActive(true);
+                if (!DeathSound.isPlaying)
+                {
+                    DeathSound.Play();
+                    Stab.gameObject.SetActive(false);
+                }
+
             }
         }
         else
@@ -102,7 +110,7 @@ public class WorldMove : MonoBehaviour
         StopPoints[stopPointIndex].transform.GetChild(1).transform.GetChild(0).GetComponent<Light>().intensity = 0;
 
         EXEC_GreenLightFlag = false;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         EXEC_redLightSwitch = true;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
@@ -121,7 +129,7 @@ public class WorldMove : MonoBehaviour
         BeepAudio.Stop();
         playerShouldCurrentlyBeStopped = false;
         stopPointIndex++;
-        worldSpeed = worldSpeed + 10f;
+        worldSpeed = worldSpeed + 5f;
         heldEngineIdlePitch += 0.2f;
         heldEngineIdleDistortionLevel += 0.1f;
 
