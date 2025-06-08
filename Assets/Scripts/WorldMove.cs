@@ -52,6 +52,7 @@ public class WorldMove : MonoBehaviour
             EngineIdleDistortion.distortionLevel = initialEngineIdleDistortionLevel;
         }
 
+        Debug.Log(stopPointIndex);
         distanceFromNextStopPoint = Vector3.Distance(Player.transform.position, StopPoints[stopPointIndex].transform.position);
 
         if (distanceFromNextStopPoint < 40f)
@@ -69,7 +70,7 @@ public class WorldMove : MonoBehaviour
         }
 
         // when we're far enough awayjrom the previous point, go ahead and reset the flag for the coroutine to be ready to run on the next stop light
-        if (distanceFromPreviousStopPoint > 41f)
+        if (distanceFromPreviousStopPoint > 41f && distanceFromPreviousStopPoint < 50f)
         {
             EXEC_GreenLightFlag = true;
         }
@@ -104,13 +105,18 @@ public class WorldMove : MonoBehaviour
         EXEC_redLightSwitch = true;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+
+        // all the enemy faces
+        StopPoints[stopPointIndex].transform.GetChild(5).transform.gameObject.SetActive(true);
+
         yield return new WaitForSeconds(10f);
+
         // green light enable
         StopPoints[stopPointIndex].transform.GetChild(1).transform.GetChild(0).GetComponent<Light>().intensity = 3;
         // red light disable
         StopPoints[stopPointIndex].transform.GetChild(3).transform.GetChild(0).GetComponent<Light>().intensity = 0;
-        playerShouldCurrentlyBeStopped = false;
 
+        playerShouldCurrentlyBeStopped = false;
         stopPointIndex++;
         worldSpeed = worldSpeed + 10f;
         heldEngineIdlePitch += 0.2f;

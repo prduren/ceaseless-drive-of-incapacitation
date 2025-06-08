@@ -7,6 +7,7 @@ public class Stab : MonoBehaviour
     Vector3 knifeInitPos;
     [SerializeField] WorldMove WorldMove;
     bool knifeInForwardPosition = false;
+    [SerializeField] AudioSource EnemyKillNoise;
 
 
     void Start()
@@ -33,6 +34,9 @@ public class Stab : MonoBehaviour
                 if (hit.transform.gameObject.tag == "enemy" && !knifeInForwardPosition)
                 {
                     Debug.Log("enemy hit");
+                    hit.transform.gameObject.SetActive(false);
+                    // TODO: make enemy noise
+                    EnemyKillNoise.Play();
                 }
             }
 
