@@ -25,6 +25,7 @@ public class WorldMove : MonoBehaviour
     [SerializeField] AudioSource BeepAudio;
     [SerializeField] AudioSource DeathSound;
     [SerializeField] Stab Stab;
+    [SerializeField] GameObject InstructionsPage;
 
     void Start()
     {
@@ -41,6 +42,8 @@ public class WorldMove : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
+            InstructionsPage.SetActive(false);
+            Stab.gameObject.SetActive(true);
             EngineIdle.pitch = heldEngineIdlePitch;
             EngineIdleDistortion.distortionLevel = heldEngineIdleDistortionLevel;
             EntireWorld.transform.position = Vector3.MoveTowards(EntireWorld.transform.position, new Vector3(0f, 0f, -10000f), worldSpeed * Time.deltaTime);
