@@ -30,7 +30,6 @@ public class WorldMove : MonoBehaviour
     [SerializeField] GameObject DeathScreenEnemy;
 
     //* MVP
-    // TODO: implement failure for if all enemies are not killed on a stoplighjt
     // TODO: implement 10 stop lights
     // TODO: implement an ending
 
@@ -82,6 +81,7 @@ public class WorldMove : MonoBehaviour
         }
 
         distanceFromNextStopPoint = Vector3.Distance(Player.transform.position, StopPoints[stopPointIndex].transform.position);
+        Debug.Log(stopPointIndex + " " + distanceFromNextStopPoint);
 
         if (distanceFromNextStopPoint < 40f)
         {
@@ -121,6 +121,7 @@ public class WorldMove : MonoBehaviour
 
     private IEnumerator TimerForGreenLight()
     {
+        Debug.Log("exec TimerForGreenLight()");
 
         // yellow light enable
         StopPoints[stopPointIndex].transform.GetChild(2).transform.GetChild(0).GetComponent<Light>().intensity = 3;
@@ -138,7 +139,7 @@ public class WorldMove : MonoBehaviour
         StopPoints[stopPointIndex].transform.GetChild(5).transform.gameObject.SetActive(true);
         BeepAudio.Play();
 
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(5f);
 
         // green light enable
         StopPoints[stopPointIndex].transform.GetChild(1).transform.GetChild(0).GetComponent<Light>().intensity = 3;
