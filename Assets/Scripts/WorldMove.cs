@@ -28,6 +28,7 @@ public class WorldMove : MonoBehaviour
     [SerializeField] GameObject InstructionsPage;
     [SerializeField] PixelStylizerCamera PixelStylizerCamera;
     [SerializeField] GameObject DeathScreenEnemy;
+    [SerializeField] ParticleSystem SnowParticles;
 
     //* MVP
     // TODO: implement an ending
@@ -152,6 +153,7 @@ public class WorldMove : MonoBehaviour
         playerShouldCurrentlyBeStopped = false;
         stopPointIndex++;
         worldSpeed = worldSpeed + 5f;
+        // SnowParticles.rateOverTime += 10;
         heldEngineIdlePitch += 0.2f;
         heldEngineIdleDistortionLevel += 0.08f;
 
