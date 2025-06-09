@@ -26,6 +26,7 @@ public class WorldMove : MonoBehaviour
     [SerializeField] AudioSource DeathSound;
     [SerializeField] Stab Stab;
     [SerializeField] GameObject InstructionsPage;
+    [SerializeField] PixelStylizerCamera PixelStylizerCamera;
 
     void Start()
     {
@@ -42,6 +43,7 @@ public class WorldMove : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
+            PixelStylizerCamera.pixelSize = 6;
             InstructionsPage.SetActive(false);
             Stab.gameObject.SetActive(true);
             EngineIdle.pitch = heldEngineIdlePitch;
@@ -54,6 +56,9 @@ public class WorldMove : MonoBehaviour
                 {
                     DeathSound.Play();
                     Stab.gameObject.SetActive(false);
+                    PixelStylizerCamera.pixelSize = 3;
+                    Cursor.visible = true;
+                    Cursor.lockState = CursorLockMode.None;
                 }
 
             }

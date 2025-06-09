@@ -40191,7 +40191,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 32568f231ddc079479761cff175d10a8, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.302
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -55010,7 +55010,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   screenWidthSize: 1280
-  pixelSize: 6
+  pixelSize: 3
   smoothCamera: 0
   stylizePixels: 0
   cameraType: 0
@@ -65747,6 +65747,7 @@ MonoBehaviour:
   DeathSound: {fileID: 1814000653}
   Stab: {fileID: 1334183605}
   InstructionsPage: {fileID: 1588965416}
+  PixelStylizerCamera: {fileID: 1403810414}
 --- !u!1 &1700854523
 GameObject:
   m_ObjectHideFlags: 0
