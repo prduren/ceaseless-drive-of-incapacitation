@@ -31,9 +31,10 @@ public class WorldMove : MonoBehaviour
 
     //* MVP
     // TODO: implement an ending
+    // TODO: knife fix: make silver shiny and black not shiny
 
     //* nice-to-haves
-    // TODO: snow particles
+    // TODO: snow particles: Rate Over Time (Emission) for increasing amount of snow as level goes
     // TODO: looking sideways to check for enemies and murder them there as well
     // TODO: radio
     // TODO: screen shake on enemy kill
