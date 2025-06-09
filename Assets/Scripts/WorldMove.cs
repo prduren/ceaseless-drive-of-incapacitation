@@ -30,13 +30,14 @@ public class WorldMove : MonoBehaviour
     [SerializeField] GameObject DeathScreenEnemy;
 
     //* MVP
-    // TODO: implement 10 stop lights
     // TODO: implement an ending
 
     //* nice-to-haves
     // TODO: snow particles
     // TODO: looking sideways to check for enemies and murder them there as well
     // TODO: radio
+    // TODO: screen shake on enemy kill
+    // TODO: fade kill for final enemy
 
     void Start()
     {
@@ -139,7 +140,7 @@ public class WorldMove : MonoBehaviour
         StopPoints[stopPointIndex].transform.GetChild(5).transform.gameObject.SetActive(true);
         BeepAudio.Play();
 
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(7f);
 
         // green light enable
         StopPoints[stopPointIndex].transform.GetChild(1).transform.GetChild(0).GetComponent<Light>().intensity = 3;
@@ -151,7 +152,7 @@ public class WorldMove : MonoBehaviour
         stopPointIndex++;
         worldSpeed = worldSpeed + 5f;
         heldEngineIdlePitch += 0.2f;
-        heldEngineIdleDistortionLevel += 0.1f;
+        heldEngineIdleDistortionLevel += 0.09f;
 
         Cursor.visible = false;
 
