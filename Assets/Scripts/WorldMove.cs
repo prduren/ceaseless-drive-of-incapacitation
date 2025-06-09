@@ -152,7 +152,7 @@ public class WorldMove : MonoBehaviour
         stopPointIndex++;
         worldSpeed = worldSpeed + 5f;
         heldEngineIdlePitch += 0.2f;
-        heldEngineIdleDistortionLevel += 0.09f;
+        heldEngineIdleDistortionLevel += 0.08f;
 
         Cursor.visible = false;
 

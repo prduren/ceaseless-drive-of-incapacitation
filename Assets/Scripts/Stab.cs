@@ -10,6 +10,7 @@ public class Stab : MonoBehaviour
     [SerializeField] AudioSource EnemyKillNoise;
     int enemiesKilledCounter = 0;
     public bool allEnemiesKilled = false;
+    [SerializeField] AudioSource EnemyKillNoiseWithReverb;
 
 
     void Start()
@@ -37,7 +38,15 @@ public class Stab : MonoBehaviour
                 {
                     enemiesKilledCounter++;
                     hit.transform.gameObject.SetActive(false);
-                    EnemyKillNoise.Play();
+                    if (enemiesKilledCounter == WorldMove.StopPoints[WorldMove.stopPointIndex].transform.GetChild(5).transform.childCount)
+                    {
+                        EnemyKillNoiseWithReverb.Play();
+                    }
+                    else
+                    {
+                        EnemyKillNoise.Play();
+                    }
+
                     if (enemiesKilledCounter == WorldMove.StopPoints[WorldMove.stopPointIndex].transform.GetChild(5).transform.childCount)
                     {
                         Debug.Log("good!");
