@@ -8,6 +8,8 @@ public class Stab : MonoBehaviour
     [SerializeField] WorldMove WorldMove;
     bool knifeInForwardPosition = false;
     [SerializeField] AudioSource EnemyKillNoise;
+    int enemiesKilledCounter = 0;
+    public bool allEnemiesKilled = false;
 
 
     void Start()
@@ -33,8 +35,15 @@ public class Stab : MonoBehaviour
             {
                 if (hit.transform.gameObject.tag == "enemy" && !knifeInForwardPosition)
                 {
+                    enemiesKilledCounter++;
                     hit.transform.gameObject.SetActive(false);
                     EnemyKillNoise.Play();
+                    if (enemiesKilledCounter == WorldMove.StopPoints[WorldMove.stopPointIndex].transform.GetChild(5).transform.childCount)
+                    {
+                        Debug.Log("good!");
+                        allEnemiesKilled = true;
+                        enemiesKilledCounter = 0;
+                    }
                 }
             }
 

@@ -6,8 +6,8 @@ public class WorldMove : MonoBehaviour
 {
     [SerializeField] GameObject EntireWorld;
     Vector3 initialEntireWorldPos;
-    [SerializeField] List<GameObject> StopPoints;
-    int stopPointIndex = 0;
+    [SerializeField] public List<GameObject> StopPoints;
+    public int stopPointIndex = 0;
     float distanceFromNextStopPoint;
     float distanceFromPreviousStopPoint;
     [SerializeField] GameObject Player;
@@ -27,6 +27,17 @@ public class WorldMove : MonoBehaviour
     [SerializeField] Stab Stab;
     [SerializeField] GameObject InstructionsPage;
     [SerializeField] PixelStylizerCamera PixelStylizerCamera;
+    [SerializeField] GameObject DeathScreenEnemy;
+
+    //* MVP
+    // TODO: implement failure for if all enemies are not killed on a stoplighjt
+    // TODO: implement 10 stop lights
+    // TODO: implement an ending
+
+    //* nice-to-haves
+    // TODO: snow particles
+    // TODO: looking sideways to check for enemies and murder them there as well
+    // TODO: radio
 
     void Start()
     {
@@ -41,7 +52,7 @@ public class WorldMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(0))
+        if (Input.GetMouseButton(0) && !DeathScreen.activeSelf && !DeathScreenEnemy.activeSelf)
         {
             PixelStylizerCamera.pixelSize = 6;
             InstructionsPage.SetActive(false);
@@ -70,7 +81,6 @@ public class WorldMove : MonoBehaviour
             EngineIdleDistortion.distortionLevel = initialEngineIdleDistortionLevel;
         }
 
-        Debug.Log(stopPointIndex);
         distanceFromNextStopPoint = Vector3.Distance(Player.transform.position, StopPoints[stopPointIndex].transform.position);
 
         if (distanceFromNextStopPoint < 40f)
@@ -91,6 +101,7 @@ public class WorldMove : MonoBehaviour
         if (distanceFromPreviousStopPoint > 41f && distanceFromPreviousStopPoint < 50f)
         {
             EXEC_GreenLightFlag = true;
+            Stab.allEnemiesKilled = false;
         }
 
         if (EXEC_redLightSwitch)
@@ -110,7 +121,6 @@ public class WorldMove : MonoBehaviour
 
     private IEnumerator TimerForGreenLight()
     {
-        Debug.Log("you should stop now");
 
         // yellow light enable
         StopPoints[stopPointIndex].transform.GetChild(2).transform.GetChild(0).GetComponent<Light>().intensity = 3;
@@ -143,5 +153,18 @@ public class WorldMove : MonoBehaviour
         heldEngineIdleDistortionLevel += 0.1f;
 
         Cursor.visible = false;
+
+        if (!Stab.allEnemiesKilled)
+        {
+            DeathScreenEnemy.SetActive(true);
+            if (!DeathSound.isPlaying)
+            {
+                DeathSound.Play();
+            }
+            Stab.gameObject.SetActive(false);
+            PixelStylizerCamera.pixelSize = 3;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
 }
