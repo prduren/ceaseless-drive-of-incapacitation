@@ -55,11 +55,12 @@ public class WorldMove : MonoBehaviour
                 if (!DeathSound.isPlaying)
                 {
                     DeathSound.Play();
-                    Stab.gameObject.SetActive(false);
-                    PixelStylizerCamera.pixelSize = 3;
-                    Cursor.visible = true;
-                    Cursor.lockState = CursorLockMode.None;
+
                 }
+                Stab.gameObject.SetActive(false);
+                PixelStylizerCamera.pixelSize = 3;
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
 
             }
         }
