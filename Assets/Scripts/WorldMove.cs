@@ -34,16 +34,13 @@ public class WorldMove : MonoBehaviour
     float distanceFromGameEnd;
     [SerializeField] AudioSource UnderwaterSound;
 
-    //* MVP
-    // TODO: knife fix: make silver shiny and black not shiny
-
+    //* MVP DONE!
 
     //* nice-to-haves
     // TODO: looking sideways to check for enemies and murder them there as well
     // TODO: radio
     // TODO: screen shake on enemy kill
     // TODO: fade kill for final enemy
-    // TODO: headlights
 
     void Start()
     {
