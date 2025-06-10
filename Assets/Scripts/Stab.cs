@@ -23,9 +23,7 @@ public class Stab : MonoBehaviour
     bool currentlyHeldRight = false;
     bool currentlyHeldLeft = false;
 
-
     //* MVP
-
 
     //* nice-to-have
     // TODO: animation for switching to looking left/right
@@ -177,7 +175,7 @@ public class Stab : MonoBehaviour
     IEnumerator SideEnemySpawner()
     {
         EXEC_SideEnemySpawner = false;
-        int random = Random.Range(100, 150);
+        int random = Random.Range(9, 20);
         yield return new WaitForSeconds(random);
         int randomSide = Random.Range(0, 2);
         if (randomSide == 0)

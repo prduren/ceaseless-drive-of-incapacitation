@@ -48,7 +48,7 @@ public class WorldMove : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         initialEntireWorldPos = EntireWorld.transform.position;
-        worldSpeed = 50f; // OG is 20f // DEBUG
+        worldSpeed = 35f; // OG is 20f // DEBUG
         initialEngineIdlePitch = EngineIdle.pitch;
         initialEngineIdleDistortionLevel = EngineIdleDistortion.distortionLevel;
         heldEngineIdlePitch = EngineIdle.pitch;
@@ -97,7 +97,7 @@ public class WorldMove : MonoBehaviour
 
         distanceFromNextStopPoint = Vector3.Distance(Player.transform.position, StopPoints[stopPointIndex].transform.position);
 
-        if (distanceFromNextStopPoint < 40f)
+        if (distanceFromNextStopPoint < 60f)
         {
             if (EXEC_GreenLightFlag)
             {
@@ -137,6 +137,8 @@ public class WorldMove : MonoBehaviour
         {
             EndScreen.SetActive(true);
             StopAllCoroutines();
+            Stab.StopAllCoroutines();
+            Stab.gameObject.SetActive(false);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             if (!UnderwaterSound.isPlaying)
