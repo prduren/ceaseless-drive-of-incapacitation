@@ -36,14 +36,14 @@ public class WorldMove : MonoBehaviour
 
     //* MVP
     // TODO: knife fix: make silver shiny and black not shiny
-    // TODO: slaughter can happen after you run the red light. disallow that.
-    // TODO: fix some enemy locations being too out of frame if you stop too far forward
+
 
     //* nice-to-haves
     // TODO: looking sideways to check for enemies and murder them there as well
     // TODO: radio
     // TODO: screen shake on enemy kill
     // TODO: fade kill for final enemy
+    // TODO: headlights
 
     void Start()
     {
