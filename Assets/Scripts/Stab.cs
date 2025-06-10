@@ -19,12 +19,12 @@ public class Stab : MonoBehaviour
     [SerializeField] GameObject LeftEnemy;
     [SerializeField] GameObject RightEnemy;
     [SerializeField] AudioSource SideEnemyAppearedSound;
+    bool currentlyHeldRight = false;
+    bool currentlyHeldLeft = false;
+
 
     //* MVP
-    // TODO: must add page to describe the S and A movements
-
-    //* BUGS
-    // TODO: reverb stab sound needs to only apply to enemies on main stoplights, NOT side enemies
+    // TODO: 
 
 
     //* nice-to-have
@@ -34,6 +34,8 @@ public class Stab : MonoBehaviour
     void Start()
     {
         knifeInitPos = gameObject.transform.position;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     void Update()
@@ -82,13 +84,25 @@ public class Stab : MonoBehaviour
             knifeInForwardPosition = true;
 
             // move knife to stabbed pos
-            gameObject.transform.position = new Vector3(knifeInitPos.x, knifeInitPos.y, knifeInitPos.z + 0.2f);
+            if (currentlyHeldRight)
+            {
+                gameObject.transform.position = new Vector3(knifeInitPos.x + 0.3f, knifeInitPos.y, knifeInitPos.z);
+            }
+            else if (currentlyHeldLeft)
+            {
+                gameObject.transform.position = new Vector3(knifeInitPos.x - 0.3f, knifeInitPos.y, knifeInitPos.z);
+            }
+            else
+            {
+                gameObject.transform.position = new Vector3(knifeInitPos.x, knifeInitPos.y, knifeInitPos.z + 0.3f);
+            }
 
 
         }
 
-        if (Input.GetKeyDown("a"))
+        if (Input.GetKeyDown("a") && !currentlyHeldRight)
         {
+            currentlyHeldLeft = true;
             DriverSideImage.SetActive(true);
             DashImage.SetActive(false);
             PassengerSideImage.SetActive(false);
@@ -104,10 +118,11 @@ public class Stab : MonoBehaviour
             }
 
             Player.transform.Rotate(0.0f, -90f, 0.0f, Space.Self);
+            knifeInitPos = gameObject.transform.position;
         }
-
-        if (Input.GetKeyDown("d"))
+        else if (Input.GetKeyDown("d") && !currentlyHeldLeft)
         {
+            currentlyHeldRight = true;
             PassengerSideImage.SetActive(true);
             DriverSideImage.SetActive(false);
             DashImage.SetActive(false);
@@ -124,24 +139,29 @@ public class Stab : MonoBehaviour
             }
 
             Player.transform.Rotate(0.0f, 90f, 0.0f, Space.Self);
+            knifeInitPos = gameObject.transform.position;
         }
 
-        if (Input.GetKeyUp("a"))
+        if (Input.GetKeyUp("a") && currentlyHeldLeft)
         {
+            currentlyHeldLeft = false;
             DashImage.SetActive(true);
             DriverSideImage.SetActive(false);
             PassengerSideImage.SetActive(false);
 
             Player.transform.Rotate(0.0f, 90f, 0.0f, Space.Self);
+            knifeInitPos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z - 0.3f);
         }
 
-        if (Input.GetKeyUp("d"))
+        else if (Input.GetKeyUp("d") && currentlyHeldRight)
         {
+            currentlyHeldRight = false;
             DashImage.SetActive(true);
             DriverSideImage.SetActive(false);
             PassengerSideImage.SetActive(false);
 
             Player.transform.Rotate(0.0f, -90f, 0.0f, Space.Self);
+            knifeInitPos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z - 0.3f);
         }
 
         if (EXEC_SideEnemySpawner)
@@ -153,7 +173,7 @@ public class Stab : MonoBehaviour
     IEnumerator SideEnemySpawner()
     {
         EXEC_SideEnemySpawner = false;
-        int random = Random.Range(2, 7);
+        int random = Random.Range(100, 150);
         yield return new WaitForSeconds(random);
         int randomSide = Random.Range(0, 2);
         if (randomSide == 0)
@@ -167,7 +187,6 @@ public class Stab : MonoBehaviour
         yield return new WaitForSeconds(5);
         if (LeftEnemy.activeSelf || RightEnemy.activeSelf)
         {
-            WorldMove.DeathScreenEnemy.SetActive(true);
             WorldMove.DeathScreenEnemy.SetActive(true);
             if (!WorldMove.DeathSound.isPlaying)
             {

@@ -45,6 +45,8 @@ public class WorldMove : MonoBehaviour
 
     void Start()
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         initialEntireWorldPos = EntireWorld.transform.position;
         worldSpeed = 50f; // OG is 20f // DEBUG
         initialEngineIdlePitch = EngineIdle.pitch;
@@ -177,7 +179,6 @@ public class WorldMove : MonoBehaviour
         heldEngineIdlePitch += 0.2f;
         heldEngineIdleDistortionLevel += 0.07f;
 
-        Cursor.visible = false;
 
         if (!Stab.allEnemiesKilled)
         {
