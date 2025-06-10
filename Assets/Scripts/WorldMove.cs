@@ -35,7 +35,6 @@ public class WorldMove : MonoBehaviour
     [SerializeField] AudioSource UnderwaterSound;
 
     //* MVP
-    // TODO: implement an ending
     // TODO: knife fix: make silver shiny and black not shiny
     // TODO: slaughter can happen after you run the red light. disallow that.
     // TODO: fix some enemy locations being too out of frame if you stop too far forward
@@ -59,7 +58,7 @@ public class WorldMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(0) && !DeathScreen.activeSelf && !DeathScreenEnemy.activeSelf)
+        if (Input.GetMouseButton(0) && !DeathScreen.activeSelf && !DeathScreenEnemy.activeSelf && !EndScreen.activeSelf)
         {
             PixelStylizerCamera.pixelSize = 6;
             InstructionsPage.SetActive(false);
@@ -70,6 +69,7 @@ public class WorldMove : MonoBehaviour
             if (playerShouldCurrentlyBeStopped)
             {
                 DeathScreen.SetActive(true);
+                StopAllCoroutines();
                 if (!DeathSound.isPlaying)
                 {
                     DeathSound.Play();
