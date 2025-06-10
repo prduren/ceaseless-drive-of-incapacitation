@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Stab : MonoBehaviour
@@ -22,6 +24,8 @@ public class Stab : MonoBehaviour
     [SerializeField] AudioSource SideEnemyAppearedSound;
     bool currentlyHeldRight = false;
     bool currentlyHeldLeft = false;
+    float alphaValue;
+    int finalEnemyHitCount = 0;
 
     //* MVP
 
@@ -31,6 +35,7 @@ public class Stab : MonoBehaviour
 
     void Start()
     {
+        alphaValue = 1f;
         knifeInitPos = gameObject.transform.position;
         actualGameStartKnifeInitPos = gameObject.transform.position;
         Cursor.visible = true;
@@ -76,6 +81,30 @@ public class Stab : MonoBehaviour
                 {
                     hit.transform.gameObject.SetActive(false);
                     EnemyKillNoise.Play();
+                }
+                else if (hit.transform.gameObject.tag == "finalEnemy" && !knifeInForwardPosition)
+                {
+                    finalEnemyHitCount++;
+                    if (finalEnemyHitCount == 10)
+                    {
+                        EnemyKillNoiseWithReverb.Play();
+                    }
+                    else
+                    {
+                        EnemyKillNoise.Play();
+                    }
+                    var renderer = hit.transform.gameObject.GetComponent<Renderer>();
+                    var colore = renderer.material.color;
+                    colore.a = alphaValue;
+                    renderer.material.color = colore;
+                    alphaValue -= 0.15f;
+
+                    if (finalEnemyHitCount == 10)
+                    {
+                        hit.transform.gameObject.SetActive(false);
+                        allEnemiesKilled = true;
+                    }
+
                 }
             }
 
@@ -186,7 +215,7 @@ public class Stab : MonoBehaviour
         {
             RightEnemy.SetActive(true);
         }
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(8);
         if (LeftEnemy.activeSelf || RightEnemy.activeSelf)
         {
             WorldMove.DeathScreenEnemy.SetActive(true);

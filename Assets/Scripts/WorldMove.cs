@@ -36,7 +36,7 @@ public class WorldMove : MonoBehaviour
     bool firstTimeToEnableSideEnemySpawner = false;
 
     //* MVP DONE
-    // TODO: snow intensity increase
+    // TODO: lighting sucks in Edge....
 
     //* nice-to-haves
     // TODO: radio
@@ -97,7 +97,7 @@ public class WorldMove : MonoBehaviour
 
         distanceFromNextStopPoint = Vector3.Distance(Player.transform.position, StopPoints[stopPointIndex].transform.position);
 
-        if (distanceFromNextStopPoint < 60f)
+        if (distanceFromNextStopPoint < 46f)
         {
             if (EXEC_GreenLightFlag)
             {
