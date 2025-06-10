@@ -15,9 +15,20 @@ public class Stab : MonoBehaviour
     [SerializeField] GameObject PassengerSideImage;
     [SerializeField] GameObject DashImage;
     [SerializeField] GameObject Player;
+    public bool EXEC_SideEnemySpawner = false;
+    [SerializeField] GameObject LeftEnemy;
+    [SerializeField] GameObject RightEnemy;
+    [SerializeField] AudioSource SideEnemyAppearedSound;
 
-    // TODO: make enemy appear every random amount of seconds and make them make a noise, then start a timer that will kill you if you dont stab them
-    // TODO: listen for the stab
+    //* MVP
+    // TODO: must add page to describe the S and A movements
+
+    //* BUGS
+    // TODO: reverb stab sound needs to only apply to enemies on main stoplights, NOT side enemies
+
+
+    //* nice-to-have
+    // TODO: animation for switching to looking left/right
 
 
     void Start()
@@ -61,6 +72,11 @@ public class Stab : MonoBehaviour
                         enemiesKilledCounter = 0;
                     }
                 }
+                else if (hit.transform.gameObject.tag == "sideEnemy" && !knifeInForwardPosition)
+                {
+                    hit.transform.gameObject.SetActive(false);
+                    EnemyKillNoise.Play();
+                }
             }
 
             knifeInForwardPosition = true;
@@ -76,6 +92,16 @@ public class Stab : MonoBehaviour
             DriverSideImage.SetActive(true);
             DashImage.SetActive(false);
             PassengerSideImage.SetActive(false);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+
+            if (LeftEnemy.activeSelf)
+            {
+                if (!SideEnemyAppearedSound.isPlaying)
+                {
+                    SideEnemyAppearedSound.Play();
+                }
+            }
 
             Player.transform.Rotate(0.0f, -90f, 0.0f, Space.Self);
         }
@@ -85,6 +111,17 @@ public class Stab : MonoBehaviour
             PassengerSideImage.SetActive(true);
             DriverSideImage.SetActive(false);
             DashImage.SetActive(false);
+
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+
+            if (RightEnemy.activeSelf)
+            {
+                if (!SideEnemyAppearedSound.isPlaying)
+                {
+                    SideEnemyAppearedSound.Play();
+                }
+            }
 
             Player.transform.Rotate(0.0f, 90f, 0.0f, Space.Self);
         }
@@ -106,5 +143,45 @@ public class Stab : MonoBehaviour
 
             Player.transform.Rotate(0.0f, -90f, 0.0f, Space.Self);
         }
+
+        if (EXEC_SideEnemySpawner)
+        {
+            StartCoroutine(SideEnemySpawner());
+        }
+    }
+
+    IEnumerator SideEnemySpawner()
+    {
+        EXEC_SideEnemySpawner = false;
+        int random = Random.Range(2, 7);
+        yield return new WaitForSeconds(random);
+        int randomSide = Random.Range(0, 2);
+        if (randomSide == 0)
+        {
+            LeftEnemy.SetActive(true);
+        }
+        else if (randomSide == 1)
+        {
+            RightEnemy.SetActive(true);
+        }
+        yield return new WaitForSeconds(5);
+        if (LeftEnemy.activeSelf || RightEnemy.activeSelf)
+        {
+            WorldMove.DeathScreenEnemy.SetActive(true);
+            WorldMove.DeathScreenEnemy.SetActive(true);
+            if (!WorldMove.DeathSound.isPlaying)
+            {
+                WorldMove.DeathSound.Play();
+            }
+            gameObject.SetActive(false);
+            WorldMove.PixelStylizerCamera.pixelSize = 3;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Debug.Log("killed side enemy in time");
+        }
+        EXEC_SideEnemySpawner = true;
     }
 }

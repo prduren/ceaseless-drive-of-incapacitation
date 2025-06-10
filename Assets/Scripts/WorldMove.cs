@@ -23,24 +23,25 @@ public class WorldMove : MonoBehaviour
     float initialEngineIdleDistortionLevel;
     float heldEngineIdleDistortionLevel;
     [SerializeField] AudioSource BeepAudio;
-    [SerializeField] AudioSource DeathSound;
+    [SerializeField] public AudioSource DeathSound;
     [SerializeField] Stab Stab;
     [SerializeField] GameObject InstructionsPage;
-    [SerializeField] PixelStylizerCamera PixelStylizerCamera;
-    [SerializeField] GameObject DeathScreenEnemy;
+    [SerializeField] public PixelStylizerCamera PixelStylizerCamera;
+    [SerializeField] public GameObject DeathScreenEnemy;
     [SerializeField] ParticleSystem SnowParticles;
     [SerializeField] GameObject EndScreen;
     [SerializeField] GameObject gameEndLocation;
     float distanceFromGameEnd;
     [SerializeField] AudioSource UnderwaterSound;
+    bool firstTimeToEnableSideEnemySpawner = false;
 
     //* MVP DONE!
 
     //* nice-to-haves
-    // TODO: looking sideways to check for enemies and murder them there as well
     // TODO: radio
     // TODO: screen shake on enemy kill
     // TODO: fade kill for final enemy
+    // TODO: highlight cursor
 
     void Start()
     {
@@ -57,6 +58,13 @@ public class WorldMove : MonoBehaviour
     {
         if (Input.GetMouseButton(0) && !DeathScreen.activeSelf && !DeathScreenEnemy.activeSelf && !EndScreen.activeSelf)
         {
+
+            if (!firstTimeToEnableSideEnemySpawner)
+            {
+                firstTimeToEnableSideEnemySpawner = true;
+                Stab.EXEC_SideEnemySpawner = true;
+            }
+
             PixelStylizerCamera.pixelSize = 6;
             InstructionsPage.SetActive(false);
             Stab.gameObject.SetActive(true);
