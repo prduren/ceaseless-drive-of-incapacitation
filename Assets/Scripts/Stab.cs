@@ -11,6 +11,13 @@ public class Stab : MonoBehaviour
     int enemiesKilledCounter = 0;
     public bool allEnemiesKilled = false;
     [SerializeField] AudioSource EnemyKillNoiseWithReverb;
+    [SerializeField] GameObject DriverSideImage;
+    [SerializeField] GameObject PassengerSideImage;
+    [SerializeField] GameObject DashImage;
+
+    // TODO: turn the head of player
+    // TODO: make enemy appear every random amount of seconds and make them make a noise, then start a timer that will kill you if you dont stab them
+    // TODO: listen for the stab
 
 
     void Start()
@@ -20,7 +27,7 @@ public class Stab : MonoBehaviour
 
     void Update()
     {
-        if (!WorldMove.playerShouldCurrentlyBeStopped) return;
+        // if (!WorldMove.playerShouldCurrentlyBeStopped) return;
 
         if (Input.GetKeyDown("s"))
         {
@@ -62,6 +69,27 @@ public class Stab : MonoBehaviour
             gameObject.transform.position = new Vector3(knifeInitPos.x, knifeInitPos.y, knifeInitPos.z + 0.2f);
 
 
+        }
+
+        if (Input.GetKeyDown("a"))
+        {
+            DriverSideImage.SetActive(true);
+            DashImage.SetActive(false);
+            PassengerSideImage.SetActive(false);
+        }
+
+        if (Input.GetKeyUp("a") || Input.GetKeyUp("d"))
+        {
+            DashImage.SetActive(true);
+            DriverSideImage.SetActive(false);
+            PassengerSideImage.SetActive(false);
+        }
+
+        if (Input.GetKeyDown("d"))
+        {
+            PassengerSideImage.SetActive(true);
+            DriverSideImage.SetActive(false);
+            DashImage.SetActive(false);
         }
 
 
