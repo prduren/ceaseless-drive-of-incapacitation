@@ -130,7 +130,10 @@ public class WorldMove : MonoBehaviour
         if (distanceFromGameEnd < 50f)
         {
             EndScreen.SetActive(true);
-            UnderwaterSound.Play();
+            if (!UnderwaterSound.isPlaying)
+            {
+                UnderwaterSound.Play();
+            }
         }
     }
 
@@ -167,7 +170,7 @@ public class WorldMove : MonoBehaviour
         worldSpeed = worldSpeed + 5f;
         // SnowParticles.rateOverTime += 10;
         heldEngineIdlePitch += 0.2f;
-        heldEngineIdleDistortionLevel += 0.08f;
+        heldEngineIdleDistortionLevel += 0.07f;
 
         Cursor.visible = false;
 
