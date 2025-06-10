@@ -36,12 +36,10 @@ public class WorldMove : MonoBehaviour
     bool firstTimeToEnableSideEnemySpawner = false;
 
     //* MVP DONE
-    // TODO: lighting sucks in Edge....
 
     //* nice-to-haves
     // TODO: radio
     // TODO: screen shake on enemy kill
-    // TODO: fade kill for final enemy
 
     void Start()
     {
@@ -122,7 +120,7 @@ public class WorldMove : MonoBehaviour
         {
 
             // red light enable
-            StopPoints[stopPointIndex].transform.GetChild(3).transform.GetChild(0).GetComponent<Light>().intensity = 3;
+            StopPoints[stopPointIndex].transform.GetChild(3).transform.GetChild(0).GetComponent<Light>().intensity = 4;
 
             // yellow light disable
             StopPoints[stopPointIndex].transform.GetChild(2).transform.GetChild(0).GetComponent<Light>().intensity = 0;
@@ -141,6 +139,7 @@ public class WorldMove : MonoBehaviour
             Stab.gameObject.SetActive(false);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
+            PixelStylizerCamera.pixelSize = 3;
             if (!UnderwaterSound.isPlaying)
             {
                 UnderwaterSound.Play();
@@ -151,7 +150,7 @@ public class WorldMove : MonoBehaviour
     private IEnumerator TimerForGreenLight()
     {
         // yellow light enable
-        StopPoints[stopPointIndex].transform.GetChild(2).transform.GetChild(0).GetComponent<Light>().intensity = 3;
+        StopPoints[stopPointIndex].transform.GetChild(2).transform.GetChild(0).GetComponent<Light>().intensity = 4;
 
         // green light disable
         StopPoints[stopPointIndex].transform.GetChild(1).transform.GetChild(0).GetComponent<Light>().intensity = 0;
@@ -169,7 +168,7 @@ public class WorldMove : MonoBehaviour
         yield return new WaitForSeconds(7f);
 
         // green light enable
-        StopPoints[stopPointIndex].transform.GetChild(1).transform.GetChild(0).GetComponent<Light>().intensity = 3;
+        StopPoints[stopPointIndex].transform.GetChild(1).transform.GetChild(0).GetComponent<Light>().intensity = 4;
         // red light disable
         StopPoints[stopPointIndex].transform.GetChild(3).transform.GetChild(0).GetComponent<Light>().intensity = 0;
 
