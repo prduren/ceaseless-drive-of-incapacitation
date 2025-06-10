@@ -5,6 +5,7 @@ using UnityEngine;
 public class Stab : MonoBehaviour
 {
     Vector3 knifeInitPos;
+    Vector3 actualGameStartKnifeInitPos;
     [SerializeField] WorldMove WorldMove;
     bool knifeInForwardPosition = false;
     [SerializeField] AudioSource EnemyKillNoise;
@@ -24,7 +25,6 @@ public class Stab : MonoBehaviour
 
 
     //* MVP
-    // TODO: 
 
 
     //* nice-to-have
@@ -34,6 +34,7 @@ public class Stab : MonoBehaviour
     void Start()
     {
         knifeInitPos = gameObject.transform.position;
+        actualGameStartKnifeInitPos = gameObject.transform.position;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
@@ -42,13 +43,13 @@ public class Stab : MonoBehaviour
     {
         // if (!WorldMove.playerShouldCurrentlyBeStopped) return;
 
-        if (Input.GetKeyDown("s"))
+        if (Input.GetKeyDown("s") && knifeInForwardPosition)
         {
             // move knife to init pos
             gameObject.transform.position = knifeInitPos;
             knifeInForwardPosition = false;
         }
-        else if (Input.GetKeyDown("w"))
+        else if (Input.GetKeyDown("w") && !knifeInForwardPosition)
         {
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
@@ -69,7 +70,6 @@ public class Stab : MonoBehaviour
 
                     if (enemiesKilledCounter == WorldMove.StopPoints[WorldMove.stopPointIndex].transform.GetChild(5).transform.childCount)
                     {
-                        Debug.Log("good!");
                         allEnemiesKilled = true;
                         enemiesKilledCounter = 0;
                     }
@@ -150,6 +150,8 @@ public class Stab : MonoBehaviour
             PassengerSideImage.SetActive(false);
 
             Player.transform.Rotate(0.0f, 90f, 0.0f, Space.Self);
+            gameObject.transform.position = actualGameStartKnifeInitPos;
+            knifeInForwardPosition = false;
             knifeInitPos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z - 0.3f);
         }
 
@@ -161,6 +163,8 @@ public class Stab : MonoBehaviour
             PassengerSideImage.SetActive(false);
 
             Player.transform.Rotate(0.0f, -90f, 0.0f, Space.Self);
+            gameObject.transform.position = actualGameStartKnifeInitPos;
+            knifeInForwardPosition = false;
             knifeInitPos = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, gameObject.transform.position.z - 0.3f);
         }
 

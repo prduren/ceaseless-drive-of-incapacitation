@@ -35,13 +35,13 @@ public class WorldMove : MonoBehaviour
     [SerializeField] AudioSource UnderwaterSound;
     bool firstTimeToEnableSideEnemySpawner = false;
 
-    //* MVP DONE!
+    //* MVP DONE
+    // TODO: snow intensity increase
 
     //* nice-to-haves
     // TODO: radio
     // TODO: screen shake on enemy kill
     // TODO: fade kill for final enemy
-    // TODO: highlight cursor
 
     void Start()
     {
