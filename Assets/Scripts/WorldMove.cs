@@ -48,7 +48,7 @@ public class WorldMove : MonoBehaviour
     void Start()
     {
         initialEntireWorldPos = EntireWorld.transform.position;
-        worldSpeed = 20f;
+        worldSpeed = 50f; // OG is 20f // DEBUG
         initialEngineIdlePitch = EngineIdle.pitch;
         initialEngineIdleDistortionLevel = EngineIdleDistortion.distortionLevel;
         heldEngineIdlePitch = EngineIdle.pitch;
@@ -89,7 +89,6 @@ public class WorldMove : MonoBehaviour
         }
 
         distanceFromNextStopPoint = Vector3.Distance(Player.transform.position, StopPoints[stopPointIndex].transform.position);
-        Debug.Log(stopPointIndex + " " + distanceFromNextStopPoint);
 
         if (distanceFromNextStopPoint < 40f)
         {
@@ -127,9 +126,12 @@ public class WorldMove : MonoBehaviour
         }
 
         distanceFromGameEnd = Vector3.Distance(Player.transform.position, gameEndLocation.transform.position);
-        if (distanceFromGameEnd < 50f)
+        if (distanceFromGameEnd < 30f)
         {
             EndScreen.SetActive(true);
+            StopAllCoroutines();
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
             if (!UnderwaterSound.isPlaying)
             {
                 UnderwaterSound.Play();
@@ -139,8 +141,6 @@ public class WorldMove : MonoBehaviour
 
     private IEnumerator TimerForGreenLight()
     {
-        Debug.Log("exec TimerForGreenLight()");
-
         // yellow light enable
         StopPoints[stopPointIndex].transform.GetChild(2).transform.GetChild(0).GetComponent<Light>().intensity = 3;
 
