@@ -14,8 +14,8 @@ public class Stab : MonoBehaviour
     [SerializeField] GameObject DriverSideImage;
     [SerializeField] GameObject PassengerSideImage;
     [SerializeField] GameObject DashImage;
+    [SerializeField] GameObject Player;
 
-    // TODO: turn the head of player
     // TODO: make enemy appear every random amount of seconds and make them make a noise, then start a timer that will kill you if you dont stab them
     // TODO: listen for the stab
 
@@ -76,13 +76,8 @@ public class Stab : MonoBehaviour
             DriverSideImage.SetActive(true);
             DashImage.SetActive(false);
             PassengerSideImage.SetActive(false);
-        }
 
-        if (Input.GetKeyUp("a") || Input.GetKeyUp("d"))
-        {
-            DashImage.SetActive(true);
-            DriverSideImage.SetActive(false);
-            PassengerSideImage.SetActive(false);
+            Player.transform.Rotate(0.0f, -90f, 0.0f, Space.Self);
         }
 
         if (Input.GetKeyDown("d"))
@@ -90,8 +85,26 @@ public class Stab : MonoBehaviour
             PassengerSideImage.SetActive(true);
             DriverSideImage.SetActive(false);
             DashImage.SetActive(false);
+
+            Player.transform.Rotate(0.0f, 90f, 0.0f, Space.Self);
         }
 
+        if (Input.GetKeyUp("a"))
+        {
+            DashImage.SetActive(true);
+            DriverSideImage.SetActive(false);
+            PassengerSideImage.SetActive(false);
 
+            Player.transform.Rotate(0.0f, 90f, 0.0f, Space.Self);
+        }
+
+        if (Input.GetKeyUp("d"))
+        {
+            DashImage.SetActive(true);
+            DriverSideImage.SetActive(false);
+            PassengerSideImage.SetActive(false);
+
+            Player.transform.Rotate(0.0f, -90f, 0.0f, Space.Self);
+        }
     }
 }
