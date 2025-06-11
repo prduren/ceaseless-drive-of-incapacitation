@@ -26,6 +26,7 @@ public class Stab : MonoBehaviour
     bool currentlyHeldLeft = false;
     float alphaValue;
     int finalEnemyHitCount = 0;
+    [SerializeField] GameObject CheckWindows;
 
     //* MVP
 
@@ -218,6 +219,7 @@ public class Stab : MonoBehaviour
         yield return new WaitForSeconds(8);
         if (LeftEnemy.activeSelf || RightEnemy.activeSelf)
         {
+            CheckWindows.SetActive(true);
             WorldMove.DeathScreenEnemy.SetActive(true);
             if (!WorldMove.DeathSound.isPlaying)
             {
