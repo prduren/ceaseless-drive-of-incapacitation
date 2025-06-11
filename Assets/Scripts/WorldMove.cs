@@ -34,8 +34,10 @@ public class WorldMove : MonoBehaviour
     float distanceFromGameEnd;
     [SerializeField] AudioSource UnderwaterSound;
     bool firstTimeToEnableSideEnemySpawner = false;
+    [SerializeField] AudioSource AmbientTrack;
 
     //* MVP DONE
+    // DECREASE MUSIC AS LEVEL GOES ON
 
     //* nice-to-haves
     // TODO: radio
@@ -175,6 +177,7 @@ public class WorldMove : MonoBehaviour
         BeepAudio.Stop();
         playerShouldCurrentlyBeStopped = false;
         stopPointIndex++;
+        AmbientTrack.volume -= 0.2f;
         worldSpeed = worldSpeed + 5f;
         // SnowParticles.rateOverTime += 10;
         heldEngineIdlePitch += 0.2f;
