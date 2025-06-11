@@ -37,7 +37,6 @@ public class WorldMove : MonoBehaviour
     [SerializeField] AudioSource AmbientTrack;
 
     //* MVP DONE
-    // DECREASE MUSIC AS LEVEL GOES ON
 
     //* nice-to-haves
     // TODO: radio
