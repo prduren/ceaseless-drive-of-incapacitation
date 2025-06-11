@@ -177,7 +177,7 @@ public class WorldMove : MonoBehaviour
         BeepAudio.Stop();
         playerShouldCurrentlyBeStopped = false;
         stopPointIndex++;
-        AmbientTrack.volume -= 0.2f;
+        AmbientTrack.volume -= 0.08f;
         worldSpeed = worldSpeed + 5f;
         // SnowParticles.rateOverTime += 10;
         heldEngineIdlePitch += 0.2f;
