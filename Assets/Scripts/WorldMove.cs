@@ -47,7 +47,7 @@ public class WorldMove : MonoBehaviour
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         initialEntireWorldPos = EntireWorld.transform.position;
-        worldSpeed = 35f; // OG is 20f // DEBUG
+        worldSpeed = 35f;
         initialEngineIdlePitch = EngineIdle.pitch;
         initialEngineIdleDistortionLevel = EngineIdleDistortion.distortionLevel;
         heldEngineIdlePitch = EngineIdle.pitch;

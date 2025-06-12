@@ -230,10 +230,6 @@ public class Stab : MonoBehaviour
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
-        else
-        {
-            Debug.Log("killed side enemy in time");
-        }
         EXEC_SideEnemySpawner = true;
     }
 }
