@@ -35,6 +35,10 @@ public class WorldMove : MonoBehaviour
     [SerializeField] AudioSource UnderwaterSound;
     bool firstTimeToEnableSideEnemySpawner = false;
     [SerializeField] AudioSource AmbientTrack;
+    [SerializeField] AreaMove AreaMove;
+    bool switchedToUnderwater = false;
+    public float yPosForWorldToMoveTowards = 0f;
+    [SerializeField] public GameObject UnderwaterFilter;
 
     //* MVP DONE
 
@@ -71,7 +75,7 @@ public class WorldMove : MonoBehaviour
             Stab.gameObject.SetActive(true);
             EngineIdle.pitch = heldEngineIdlePitch;
             EngineIdleDistortion.distortionLevel = heldEngineIdleDistortionLevel;
-            EntireWorld.transform.position = Vector3.MoveTowards(EntireWorld.transform.position, new Vector3(0f, 0f, -10000f), worldSpeed * Time.deltaTime);
+            EntireWorld.transform.position = Vector3.MoveTowards(EntireWorld.transform.position, new Vector3(0f, yPosForWorldToMoveTowards, -10000f), worldSpeed * Time.deltaTime);
             if (playerShouldCurrentlyBeStopped)
             {
                 DeathScreen.SetActive(true);
@@ -132,13 +136,15 @@ public class WorldMove : MonoBehaviour
         }
 
         distanceFromGameEnd = Vector3.Distance(Player.transform.position, gameEndLocation.transform.position);
-        if (distanceFromGameEnd < 30f)
+        if (!switchedToUnderwater && distanceFromGameEnd < 20f)
         {
             // DEBUG
 
             // UnityEngine.Debug.Log("EntireWorld pos: " + EntireWorld.transform.position + " ||||| stopPointIndex: " + stopPointIndex);
 
             // END DEBUG
+
+            AreaMove.StartUnderwater();
 
             // EndScreen.SetActive(true);
             // StopAllCoroutines();
@@ -151,6 +157,8 @@ public class WorldMove : MonoBehaviour
             {
                 UnderwaterSound.Play();
             }
+
+            switchedToUnderwater = true;
         }
     }
 
