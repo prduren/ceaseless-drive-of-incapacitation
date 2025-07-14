@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WorldMove : MonoBehaviour
 {
-    [SerializeField] GameObject EntireWorld;
+    [SerializeField] public GameObject EntireWorld;
     Vector3 initialEntireWorldPos;
     [SerializeField] public List<GameObject> StopPoints;
     public int stopPointIndex = 0;
@@ -15,13 +15,13 @@ public class WorldMove : MonoBehaviour
     public bool playerShouldCurrentlyBeStopped = false;
     [SerializeField] GameObject DeathScreen;
     bool EXEC_GreenLightFlag = true;
-    float worldSpeed;
-    [SerializeField] AudioSource EngineIdle;
-    float initialEngineIdlePitch;
-    float heldEngineIdlePitch;
-    [SerializeField] AudioDistortionFilter EngineIdleDistortion;
-    float initialEngineIdleDistortionLevel;
-    float heldEngineIdleDistortionLevel;
+    public float worldSpeed;
+    [SerializeField] public AudioSource EngineIdle;
+    public float initialEngineIdlePitch;
+    public float heldEngineIdlePitch;
+    [SerializeField] public AudioDistortionFilter EngineIdleDistortion;
+    public float initialEngineIdleDistortionLevel;
+    public float heldEngineIdleDistortionLevel;
     [SerializeField] AudioSource BeepAudio;
     [SerializeField] public AudioSource DeathSound;
     [SerializeField] Stab Stab;
@@ -134,13 +134,19 @@ public class WorldMove : MonoBehaviour
         distanceFromGameEnd = Vector3.Distance(Player.transform.position, gameEndLocation.transform.position);
         if (distanceFromGameEnd < 30f)
         {
-            EndScreen.SetActive(true);
-            StopAllCoroutines();
-            Stab.StopAllCoroutines();
-            Stab.gameObject.SetActive(false);
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-            PixelStylizerCamera.pixelSize = 3;
+            // DEBUG
+
+            // UnityEngine.Debug.Log("EntireWorld pos: " + EntireWorld.transform.position + " ||||| stopPointIndex: " + stopPointIndex);
+
+            // END DEBUG
+
+            // EndScreen.SetActive(true);
+            // StopAllCoroutines();
+            // Stab.StopAllCoroutines();
+            // Stab.gameObject.SetActive(false);
+            // Cursor.visible = true;
+            // Cursor.lockState = CursorLockMode.None;
+            // PixelStylizerCamera.pixelSize = 3;
             if (!UnderwaterSound.isPlaying)
             {
                 UnderwaterSound.Play();
