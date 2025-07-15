@@ -24,6 +24,8 @@ public class AreaMove : MonoBehaviour
         ColorUtility.TryParseHtmlString("#0F566C", out Color blueFromHex);
         RenderSettings.fogColor = blueFromHex;
         RenderSettings.fogEndDistance = 200f;
+        WorldMove.BubbleEffects.SetActive(true);
+        WorldMove.SnowEffects.SetActive(false);
     }
 
 }

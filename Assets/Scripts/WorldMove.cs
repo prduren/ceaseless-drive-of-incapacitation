@@ -39,6 +39,8 @@ public class WorldMove : MonoBehaviour
     bool switchedToUnderwater = false;
     public float yPosForWorldToMoveTowards = 0f;
     [SerializeField] public GameObject UnderwaterFilter;
+    [SerializeField] public GameObject BubbleEffects;
+    [SerializeField] public GameObject SnowEffects;
 
     //* MVP DONE
 
